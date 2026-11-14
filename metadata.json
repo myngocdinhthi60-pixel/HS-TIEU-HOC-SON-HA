@@ -1,0 +1,6 @@
+{
+  "name": "Phòng thực hành Tin học 3, 4, 5",
+  "description": "Website thực hành Tin học tiểu học lớp 3, 4, 5 theo bộ sách Kết nối tri thức với cuộc sống.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

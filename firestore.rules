@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Kiến trúc server-first: trình duyệt chỉ làm việc qua API/SSE cùng origin có session cookie HttpOnly.
+// Toàn bộ truy cập Firestore đi qua Firebase Admin SDK ở backend; client SDK bị từ chối mặc định.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

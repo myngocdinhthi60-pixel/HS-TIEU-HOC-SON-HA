@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-canvas: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-subtle: #e2e8f0;
+    --accent-primary: #0284c7;
+    --accent-secondary: #ea580c;
+    color-scheme: light;
+  }
+
+  html.dark {
+    --bg-canvas: #0b1220;
+    --bg-surface: #131d31;
+    --bg-subtle: #1a2742;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-subtle: #25334d;
+    --accent-primary: #38bdf8;
+    --accent-secondary: #fb923c;
+    color-scheme: dark;
+  }
+
+  html {
+    font-family: 'Plus Jakarta Sans', 'Nunito', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.dark body {
+    letter-spacing: 0.008em;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Nunito', 'Plus Jakarta Sans', system-ui, sans-serif;
+    text-wrap: balance;
+  }
+
+  .font-mono, code, kbd, .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes barGrowUp {
+  from {
+    transform: scaleY(0.12);
+    opacity: 0.4;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-bar-grow {
+  transform-origin: bottom center;
+  animation: barGrowUp 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    color-scheme: light !important;
+  }
+}

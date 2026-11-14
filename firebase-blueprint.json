@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "ClassRoom": {
+      "title": "ClassRoom",
+      "description": "Lớp học tiểu học khối 3, 4 hoặc 5 và cấu hình nhánh/bảng xếp hạng.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string", "maxLength": 20 },
+        "name": { "type": "string", "maxLength": 60 },
+        "grade": { "type": "number" },
+        "branchSelection": { "type": "string" },
+        "leaderboardEnabled": { "type": "boolean" },
+        "teacherUid": { "type": "string" }
+      },
+      "required": ["id", "code", "name", "grade", "leaderboardEnabled", "teacherUid"]
+    },
+    "UserAccount": {
+      "title": "UserAccount",
+      "description": "Tài khoản học sinh hoặc giáo viên.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "teacher", "admin"] },
+        "fullName": { "type": "string", "maxLength": 120 },
+        "nickname": { "type": "string", "maxLength": 60 },
+        "avatarId": { "type": "string" },
+        "email": { "type": "string" },
+        "studentCode": { "type": "string" },
+        "classId": { "type": "string" },
+        "locked": { "type": "boolean" },
+        "totalXp": { "type": "number" }
+      },
+      "required": ["uid", "role", "fullName", "locked"]
+    },
+    "LessonVersion": {
+      "title": "LessonVersion",
+      "description": "Phiên bản bài học có trạng thái nguồn SGK và trạng thái xuất bản.",
+      "type": "object",
+      "properties": {
+        "lessonId": { "type": "string" },
+        "versionId": { "type": "string" },
+        "grade": { "type": "number" },
+        "title": { "type": "string" },
+        "startPage": { "type": "number" },
+        "sourceStatus": { "type": "string", "enum": ["complete", "partial", "toc_only"] },
+        "publishStatus": { "type": "string", "enum": ["draft", "approved", "published"] }
+      },
+      "required": ["lessonId", "versionId", "grade", "title", "startPage", "sourceStatus", "publishStatus"]
+    },
+    "Attempt": {
+      "title": "Attempt",
+      "description": "Lượt làm bài và bản nháp tự lưu có revision.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "classId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "versionId": { "type": "string" },
+        "revision": { "type": "number" },
+        "status": { "type": "string", "enum": ["in_progress", "submitted"] }
+      },
+      "required": ["id", "uid", "classId", "lessonId", "versionId", "revision", "status"]
+    },
+    "XpLedger": {
+      "title": "XpLedger",
+      "description": "Sổ cái XP bất biến theo awardId ổn định.",
+      "type": "object",
+      "properties": {
+        "awardId": { "type": "string" },
+        "uid": { "type": "string" },
+        "classId": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "awardType": { "type": "string", "enum": ["practice", "quiz", "minigame"] },
+        "xp": { "type": "number" },
+        "weekKey": { "type": "string" }
+      },
+      "required": ["awardId", "uid", "classId", "lessonId", "awardType", "xp", "weekKey"]
+    }
+  },
+  "firestore": {
+    "/classes/{classId}": {
+      "schema": { "$ref": "#/entities/ClassRoom" },
+      "description": "Danh sách lớp học và cấu hình."
+    },
+    "/users/{uid}": {
+      "schema": { "$ref": "#/entities/UserAccount" },
+      "description": "Hồ sơ người dùng."
+    },
+    "/lessons/{lessonId}/versions/{versionId}": {
+      "schema": { "$ref": "#/entities/LessonVersion" },
+      "description": "Các phiên bản nội dung bài học."
+    },
+    "/attempts/{attemptId}": {
+      "schema": { "$ref": "#/entities/Attempt" },
+      "description": "Lượt làm bài và tự lưu của học sinh."
+    },
+    "/xpLedger/{awardId}": {
+      "schema": { "$ref": "#/entities/XpLedger" },
+      "description": "Sổ XP chống cộng trùng."
+    }
+  }
+}
